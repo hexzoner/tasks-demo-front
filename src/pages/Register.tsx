@@ -1,10 +1,10 @@
-import { Flex, TextField, Section, Button } from "@radix-ui/themes"
+import { Flex, TextField, Section, Button, Text } from "@radix-ui/themes"
 import { sLoginSection, sLoginPage, sButtonSubmit, sFormContainer } from "../styles/styles"
 
 export default function Register() {
     return <div style={sLoginPage}>
         <Section style={sLoginSection}>
-            <p style={{ textAlign: "center", fontSize: "1.5rem" }}>Create New Account</p>
+            <Text as="div" align={"center"} style={{ textAlign: "center", fontSize: "1.5rem", padding: "2rem" }}> Create New Account</Text>
             <Flex direction="column" gap="3" style={sFormContainer}>
                 <TextField.Root color="gray" variant="soft" placeholder="Email Address" />
                 <TextField.Root color="gray" variant="soft" placeholder="Password" />
@@ -12,5 +12,5 @@ export default function Register() {
                 <Button color="green" variant="soft" style={sButtonSubmit}>Submit</Button>
             </Flex>
         </Section>
-    </div >
+    </div>
 }
