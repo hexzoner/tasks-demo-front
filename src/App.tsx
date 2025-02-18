@@ -1,15 +1,14 @@
 import './App.css'
-import { Flex, Text, Button } from "@radix-ui/themes";
-
+// import { Flex, Text, Button } from "@radix-ui/themes";
+// import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
-    <>
-      <Flex direction="column" gap="2">
-        <Text>Hello from Radix Themes :)</Text>
-        <Button>Let's go</Button>
-      </Flex>
-    </>
+    <div>
+      {/* < Login /> */}
+      < Register />
+    </div >
   )
 }
 
