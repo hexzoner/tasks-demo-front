@@ -14,6 +14,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     const checkMe = async () => {
+      if (!restoreToken()) {
+        setAuthUser(null);
+        return;
+      }
       try {
         setAuthLoading(true);
         // const user = await meApi(restoreToken());
@@ -41,8 +45,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearUserLogin();
   }
 
+  function setAuthUser(user: any) {
+    if (!user) {
+      clearUserLogin();
+      return;
+    }
+    setUser(user);
+    setIsAuthenticated(true);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, setUser, authLoading, setAuthLoading, isAuthenticated, setIsAuthenticated, logout }}>
+    <AuthContext.Provider value={{ user, setUser, authLoading, setAuthLoading, isAuthenticated, setIsAuthenticated, logout, setAuthUser }}>
       {children}
     </AuthContext.Provider>
   );

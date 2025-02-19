@@ -8,7 +8,7 @@ if (!API_URL) throw new Error("API URL is required, are you missing a .env file?
 const baseURL = `${API_URL}/users`;
 
 export function loginMutation(onSuccess: (data: any) => void) {
-    const { setUser } = useAuth()
+    const { setAuthUser } = useAuth()
     return useMutation({
         mutationFn: (loginData: any) => {
             return axios.post(`${baseURL}/login`, loginData)
@@ -20,7 +20,7 @@ export function loginMutation(onSuccess: (data: any) => void) {
             // console.log(data.data.token)
             // console.log(data.data.user)
             storeToken(data.data.token)
-            setUser(data.data.user)
+            setAuthUser(data.data.user)
             onSuccess(data)
         },
         // onSettled: (data, error, variables, context?: { id: string }) => {
@@ -30,7 +30,7 @@ export function loginMutation(onSuccess: (data: any) => void) {
 }
 
 export function signUpMutation(onSuccess: (data: any) => void) {
-    const { setUser } = useAuth()
+    const { setAuthUser } = useAuth()
     return useMutation({
         mutationFn: (data: any) => {
             return axios.post(`${baseURL}`, data)
@@ -40,33 +40,37 @@ export function signUpMutation(onSuccess: (data: any) => void) {
         },
         onSuccess: (data) => {
             storeToken(data.data.token)
-            setUser(data.data.user)
+            setAuthUser(data.data.user)
             onSuccess(data)
         },
     })
 }
 
 export function logoutMutation() {
-    const { setUser } = useAuth()
+    const { setAuthUser } = useAuth()
     return useMutation({
         mutationFn: () => {
             return axios.post(`${baseURL}/logout`)
         },
-        onSuccess: () => {
-            setUser(null)
+        onSettled: () => {
+            setAuthUser(null)
             deleteToken()
         },
+        onError: () => {
+            setAuthUser(null)
+            deleteToken()
+        }
     })
 }
 
 export function authMeMutation() {
-    const { setUser } = useAuth()
+    const { setAuthUser } = useAuth()
     return useMutation({
         mutationFn: () => {
             return axios.get(`${baseURL}/me`)
         },
         onSuccess: (data) => {
-            setUser(data.data)
+            setAuthUser(data.data)
         },
     })
 }

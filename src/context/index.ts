@@ -9,12 +9,14 @@ interface AuthContextProps {
   setAuthLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  setAuthUser: (user: any) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   setUser: () => { },
+  setAuthUser: () => { },
   authLoading: true,
   setAuthLoading: () => { },
   isAuthenticated: false,

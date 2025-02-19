@@ -6,11 +6,16 @@ import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { loginMutation } from '../../api/auth';
 import { formTextError, textError, textSuccess } from '../../styles/styles';
+import { useNavigate } from 'react-router-dom';
 
 export const Page: FC = () => {
+    const nav = useNavigate()
+
     function onSuccess(data: any) {
         console.log(data.data.token)
         console.log(data.data.user)
+        //redirect user to dashboard
+        nav('/dashboard')
     }
 
     const login = loginMutation(onSuccess)

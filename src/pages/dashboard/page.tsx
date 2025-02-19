@@ -3,8 +3,8 @@ import { FC } from 'react';
 // import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 
 export const Page: FC = () => {
-    return <div>
-        Dashboard
+    return <div className='min-h-screen '>
+        <p className='text-2xl text-center mt-8'>Dashboard</p>
 
     </div>
 };
