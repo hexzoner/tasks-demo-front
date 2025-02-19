@@ -8,7 +8,12 @@ import { loginMutation } from '../../api/auth';
 import { formTextError, textError, textSuccess } from '../../styles/styles';
 
 export const Page: FC = () => {
-    const login = loginMutation()
+    function onSuccess(data: any) {
+        console.log(data.data.token)
+        console.log(data.data.user)
+    }
+
+    const login = loginMutation(onSuccess)
 
     const {
         register,
