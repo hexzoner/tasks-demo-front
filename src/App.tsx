@@ -7,6 +7,12 @@ import { Dashboard } from './pages/dashboard';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import MainLayout from './layouts/MainLayout';
 import ProtectedLayout from './layouts/ProtectedLayout';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +33,8 @@ const router = createBrowserRouter(
 
 export default function App() {
   return <div className='bg-gray-900'>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </div>;
 }
