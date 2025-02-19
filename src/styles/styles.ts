@@ -13,3 +13,5 @@ export const sButton = { cursor: "pointer" }
 export const sFormContainer = { margin: "auto", maxWidth: "250px" }
 export const sHeader = { textAlign: "center", fontSize: "1.5rem" }
 
+export const activeColor = "#b63c3e"; export const navLinkClass = ({ isActive }: { isActive: boolean }) => `px-6 py-2 ${isActive ? `bg-blue-800` : ""} `;
+
