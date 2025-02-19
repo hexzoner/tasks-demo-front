@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { Flex, TextField, Section, Button } from "@radix-ui/themes"
-import { sLoginSection, sLoginPage, sButtonSubmit } from "../styles/styles"
+import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 
-export default function Login() {
+export const Page: FC = () => {
     return <div style={sLoginPage}>
         <Section style={sLoginSection}>
             <p style={{ textAlign: "center", fontSize: "1.5rem", padding: "1rem" }}>Login</p>
@@ -12,4 +13,6 @@ export default function Login() {
             </Flex>
         </Section>
     </div >
-}
+};
+
+export default Page;
