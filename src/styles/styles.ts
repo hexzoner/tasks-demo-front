@@ -14,4 +14,6 @@ export const sFormContainer = { margin: "auto", maxWidth: "250px" }
 export const sHeader = { textAlign: "center", fontSize: "1.5rem" }
 
 export const activeColor = "#b63c3e"; export const navLinkClass = ({ isActive }: { isActive: boolean }) => `px-6 py-2 ${isActive ? `bg-blue-800` : ""} `;
-
+export const formTextError = "text-red-500 text-xs text-left mt-0 ml-2 absolute"
+export const textError = "text-red-400 font-thin text-sm"
+export const textSuccess = "text-green-400 font-thin text-sm"

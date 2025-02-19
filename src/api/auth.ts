@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from "axios";
-
+import { storeToken } from '../utils/storage';
 
 const API_URL = import.meta.env.VITE_API_URL;
 if (!API_URL) throw new Error("API URL is required, are you missing a .env file?");
@@ -41,6 +41,7 @@ export function loginMutation() {
         onSuccess: (data) => {
             console.log(data.data.token)
             console.log(data.data.user)
+            storeToken(data.data.token)
         },
         // onSettled: (data, error, variables, context?: { id: string }) => {
         //     // Error or success... doesn't matter!

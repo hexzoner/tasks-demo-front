@@ -5,13 +5,7 @@ import { Form } from "radix-ui";
 import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { loginMutation } from '../../api/auth';
-
-// const loginData = {
-//     email: "aaa",
-//     password: "1234"
-// }
-
-const textError = "text-red-500 text-xs text-left mt-0 ml-2 absolute"
+import { formTextError, textError, textSuccess } from '../../styles/styles';
 
 export const Page: FC = () => {
     const login = loginMutation()
@@ -50,7 +44,7 @@ export const Page: FC = () => {
                                 })}
                                 className="Input bg-[#282f3d] px-2 py-1 text-sm font-light w-full my-1" type="email" required placeholder='Enter your email...' />
                         </Form.Control>
-                        {errors.email && <p className={textError}>{errors.email.message?.toString()}</p>}
+                        {errors.email && <p className={formTextError}>{errors.email.message?.toString()}</p>}
                     </Form.Field>
 
                     <Form.Field className="FormField" name="password">
@@ -68,13 +62,13 @@ export const Page: FC = () => {
                                 })}
                                 className="Input bg-[#282f3d] px-2 py-1 text-sm font-light w-full my-1" type="password" required placeholder='Enter your password...' />
                         </Form.Control>
-                        {errors.password && <p className={textError}>{errors.password.message?.toString()}</p>}
+                        {errors.password && <p className={formTextError}>{errors.password.message?.toString()}</p>}
                     </Form.Field>
 
                     <Button type='submit' color="green" variant="soft" style={sButtonSubmit}>Submit</Button>
                     <div className='text-center'>
-                        {login.isError ? (<div className='text-red-400 font-thin text-sm'>Error: {login.error.response.data.errors[0].message}</div>) : null}
-                        {login.isSuccess ? (<div className='text-green-400 font-thin text-sm'>Login successful</div>) : null}
+                        {login.isError ? (<div className={textError}>Error: {login.error.response.data.errors[0].message}</div>) : null}
+                        {login.isSuccess ? (<div className={textSuccess}>Login successful</div>) : null}
                     </div>
                 </Flex>
             </Form.Root>
