@@ -9,8 +9,7 @@ export const sLoginSection = {
 }
 
 export const sButtonSubmit = { cursor: "pointer", marginTop: "1rem" }
-
+export const sButton = { cursor: "pointer" }
 export const sFormContainer = { margin: "auto", maxWidth: "250px" }
-
 export const sHeader = { textAlign: "center", fontSize: "1.5rem" }
 
