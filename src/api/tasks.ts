@@ -1,7 +1,8 @@
 import { getAPIURL, tokenHeader } from './shared';
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, keepPreviousData } from '@tanstack/react-query'
 import { queryClient } from '../App';
 import axios from "axios";
+import { PaginationState } from '@tanstack/react-table';
 
 const baseURL = getAPIURL() + "/tasks";
 
@@ -42,13 +43,16 @@ export interface getTasksResponse {
     totalPages: number;
 }
 
-export function getTasksQuery() {
+export function getTasksQuery(pagination: PaginationState) {
+    let query = `page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`
     return useQuery({
-        queryKey: ['getTasks'],
+        queryKey: ['getTasks', pagination],
         queryFn: async (): Promise<getTasksResponse> => {
-            const response = await axios.get(`${baseURL}`, { headers: tokenHeader })
+            if (!query) query = ""
+            const response = await axios.get(`${baseURL}?${query}`, { headers: tokenHeader })
             return response.data
-        }
+        },
+        placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/
     })
 }
 

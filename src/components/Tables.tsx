@@ -64,30 +64,26 @@ export function Pagination({ table }: { table: Table<Task> }) {
     return <div className="flex items-center gap-3 justify-center text-gray-400">
         <button
             className={buttonStyle}
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-        >
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}>
             {'<<'}
         </button>
         <button
             className={buttonStyle}
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-        >
+            disabled={!table.getCanPreviousPage()}>
             {'<'}
         </button>
         <button
             className={buttonStyle}
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-        >
+            disabled={!table.getCanNextPage()}>
             {'>'}
         </button>
         <button
             className={buttonStyle}
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-        >
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}>
             {'>>'}
         </button>
         <span className="flex items-center gap-1">
