@@ -5,7 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     getSortedRowModel,
-    SortingFn,
+    // SortingFn,
     SortingState,
     useReactTable,
     // Column,
@@ -16,18 +16,18 @@ import {
 } from '@tanstack/react-table'
 
 import { Pagination } from '../../components/Tables';
-import { Task, TaskStatus } from '../../api/tasks';
+import { Task } from '../../api/tasks';
 import { formatDateShort, truncateText } from '../../utils/dateUtils';
 import { Filter } from '../../components/Tables';
 
-//custom sorting logic for one of our enum columns
-const sortStatusFn: SortingFn<Task> = (rowA, rowB, _columnId) => {
-    const statusA = rowA.original.status as TaskStatus;
-    const statusB = rowB.original.status as TaskStatus;
-    // const statusOrder = ['single', 'complicated', 'relationship']
-    const statusOrder = [TaskStatus.toDo, TaskStatus.inProgress, TaskStatus.done];
-    return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB)
-}
+// //custom sorting logic for one of our enum columns
+// const sortStatusFn: SortingFn<Task> = (rowA, rowB, _columnId) => {
+//     const statusA = rowA.original.status;
+//     const statusB = rowB.original.status;
+//     // const statusOrder = ['single', 'complicated', 'relationship']
+//     const statusOrder = [TaskStatus.toDo as string, TaskStatus.inProgress as string, TaskStatus.done as string];
+//     return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB)
+// }
 
 const centerScreenStyle = "flex justify-center items-center h-screen";
 
@@ -85,7 +85,10 @@ export const Page: FC = () => {
             {
                 accessorKey: 'status',
                 header: 'Status',
-                sortingFn: sortStatusFn, //use our custom sorting function for this enum column
+                // sortingFn: sortStatusFn, //use our custom sorting function for this enum column
+                meta: {
+                    filterVariant: 'select',
+                }
             },
             {
                 accessorKey: 'createdAt',

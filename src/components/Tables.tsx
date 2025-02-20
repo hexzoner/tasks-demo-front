@@ -30,25 +30,26 @@ export function Filter({ column }: { column: Column<any, unknown> }) {
                         column.setFilterValue((old: [number, number]) => [old?.[0], value])
                     }
                     placeholder={`Max`}
-                    className="w-24 border shadow rounded rounded-none"
+                    className="w-24 border shadow  rounded-none"
                 />
             </div>
             <div className="h-1" />
         </div>
     ) : filterVariant === 'select' ? (
         <select
+            className='bg-[#18202f] px-2 py-1 cursor-pointer text-center border border-gray-700 border-opacity-25 border-solid text-gray-400 font-light'
             onChange={e => column.setFilterValue(e.target.value)}
             value={columnFilterValue?.toString()}
         >
             {/* See faceted column filters example for dynamic select options */}
             <option value="">All</option>
-            <option value="complicated">complicated</option>
-            <option value="relationship">relationship</option>
-            <option value="single">single</option>
+            <option value="toDo">To Do</option>
+            <option value="inProgress">In Progress</option>
+            <option value="done">Done</option>
         </select>
     ) : (
         <DebouncedInput
-            className="w-36 border border-gray-700 border-opacity-25 border-solid shadow px-2 py-1 text-sm font-light"
+            className="w-[90%] border border-gray-700 border-opacity-25 border-solid shadow px-2 py-1 text-sm font-light"
             onChange={value => column.setFilterValue(value)}
             placeholder={`Search...`}
             type="text"
@@ -58,9 +59,9 @@ export function Filter({ column }: { column: Column<any, unknown> }) {
     )
 }
 
-const buttonStyle = 'border rounded p-1 cursor-pointer'
+const buttonStyle = 'border rounded px-2 py-1 cursor-pointer'
 export function Pagination({ table }: { table: Table<Task> }) {
-    return <div className="flex items-center gap-2 justify-center">
+    return <div className="flex items-center gap-3 justify-center text-gray-400">
         <button
             className={buttonStyle}
             onClick={() => table.setPageIndex(0)}
