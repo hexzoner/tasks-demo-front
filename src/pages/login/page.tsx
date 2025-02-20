@@ -5,7 +5,7 @@ import { Form } from "radix-ui";
 import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { loginMutation } from '../../api/auth';
-import { formTextError, textError, textSuccess } from '../../styles/styles';
+import { formTextError, textError, textSuccess, inputClass } from '../../styles/styles';
 import { useNavigate } from 'react-router-dom';
 
 export const Page: FC = () => {
@@ -52,7 +52,7 @@ export const Page: FC = () => {
                                         message: "Invalid email address",
                                     },
                                 })}
-                                className="Input bg-[#282f3d] px-2 py-1 text-sm font-light w-full my-1" type="email" required placeholder='Enter your email...' />
+                                className={inputClass} type="email" required placeholder='Enter your email' />
                         </Form.Control>
                         {errors.email && <p className={formTextError}>{errors.email.message?.toString()}</p>}
                     </Form.Field>
@@ -70,7 +70,7 @@ export const Page: FC = () => {
                                         message: "Password must be at least 4 characters",
                                     },
                                 })}
-                                className="Input bg-[#282f3d] px-2 py-1 text-sm font-light w-full my-1" type="password" required placeholder='Enter your password...' />
+                                className={inputClass} type="password" required placeholder='Enter your password' />
                         </Form.Control>
                         {errors.password && <p className={formTextError}>{errors.password.message?.toString()}</p>}
                     </Form.Field>

@@ -1,11 +1,18 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from "axios";
-import { storeToken, deleteToken } from '../utils/storage';
+import { storeToken, restoreToken } from '../utils/storage';
 import { useAuth } from '../context';
 
 const API_URL = import.meta.env.VITE_API_URL;
 if (!API_URL) throw new Error("API URL is required, are you missing a .env file?");
 const baseURL = `${API_URL}/users`;
+
+export const tokenHeader =
+{
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${restoreToken()}`,
+}
+
 
 export function loginMutation(onSuccess: (data: any) => void) {
     const { setAuthUser } = useAuth()
@@ -46,61 +53,61 @@ export function signUpMutation(onSuccess: (data: any) => void) {
     })
 }
 
-export function logoutMutation() {
-    const { setAuthUser } = useAuth()
-    return useMutation({
-        mutationFn: () => {
-            return axios.post(`${baseURL}/logout`)
-        },
-        onSettled: () => {
-            setAuthUser(null)
-            deleteToken()
-        },
-        onError: () => {
-            setAuthUser(null)
-            deleteToken()
-        }
-    })
-}
-
-export function authMeMutation() {
-    const { setAuthUser } = useAuth()
-    return useMutation({
-        mutationFn: () => {
-            return axios.get(`${baseURL}/me`)
-        },
-        onSuccess: (data) => {
-            setAuthUser(data.data)
-        },
-    })
-}
-
-// interface User {
-//     id: number;
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     roles: string[];
-// }
-
-// interface LoginResponse {
-//     token: string;
-//     user: User
-// }
-
-// export function loginApi(loginData: any, enabled: boolean) {
-//     return useQuery({
-//         queryKey: ['login'],
-//         queryFn: async (): Promise<LoginResponse> => {
-//             const response = await axios.post(`${baseURL}/login`, loginData)
-//             return response.data
+// export function logoutMutation() {
+//     const { setAuthUser } = useAuth()
+//     return useMutation({
+//         mutationFn: () => {
+//             return axios.post(`${baseURL}/logout`)
 //         },
-//         enabled: enabled
+//         onSettled: () => {
+//             setAuthUser(null)
+//             deleteToken()
+//         },
+//         onError: () => {
+//             setAuthUser(null)
+//             deleteToken()
+//         }
 //     })
 // }
 
-// export async function login() {
-//     console.log(baseURL)
-//     const { isPending, error, data } = useQuery(api_LoginQuery)
-//     return { isPending, error, data }
+// export function authMeMutation() {
+//     const { setAuthUser } = useAuth()
+//     return useMutation({
+//         mutationFn: () => {
+//             return axios.get(`${baseURL}/me`, { headers: tokenHeader })
+//         },
+//         onSuccess: (data) => {
+//             console.log(data)
+//             setAuthUser(data.data)
+//         },
+//         onError: (error: any) => {
+//             console.log(error.response.data.errors[0].name, error.response.data.errors[0].message)
+//         },
+//         onSettled: () => {
+//             console.log("settled")
+//         }
+//     })
 // }
+
+interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    roles: string[];
+}
+
+interface AuthMeResponse {
+    user: User,
+    token: string
+}
+
+export function authMeQuery() {
+    return useQuery({
+        queryKey: ['authMe'],
+        queryFn: async (): Promise<AuthMeResponse> => {
+            const response = await axios.get(`${baseURL}/me`, { headers: tokenHeader })
+            return response.data
+        }
+    })
+}

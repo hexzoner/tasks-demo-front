@@ -4,14 +4,15 @@ import { useAuth } from "../context";
 // import { logoutMutation } from "../api/auth";
 
 export default function Navbar() {
-    const { user, isAuthenticated, setAuthUser } = useAuth();
+    const { user, isAuthenticated, setAuthUser, authLoading } = useAuth();
 
     // const logout = logoutMutation();
+    if (authLoading) return null;
 
     return (
-        <div className="bg-[#18202f]  p-5 flex justify-between px-20">
+        <div className="bg-[#18202f]  p-5 flex justify-between px-20 items-center">
             <p className="italic font-sans font-semibold text-xl">Task Manager</p>
-            {user && <p className="text-white">Welcome, {user.firstName}</p>}
+            {user && user.firstName && <p className="text-white">Welcome, {user.firstName}!</p>}
             <div className="flex gap-5">
                 {isAuthenticated ? <div className="flex gap-4">
                     <NavLink to="/dashboard" className={navLinkClass}>
@@ -25,7 +26,7 @@ export default function Navbar() {
                         <NavLink to="/login" className={navLinkClass}>
                             Login
                         </NavLink>
-                        <NavLink to="/register" className={navLinkClass}>
+                        <NavLink to="/signup" className={navLinkClass}>
                             SignUp
                         </NavLink>
                     </div>

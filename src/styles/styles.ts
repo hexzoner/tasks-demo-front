@@ -17,3 +17,4 @@ export const activeColor = "#b63c3e"; export const navLinkClass = ({ isActive }:
 export const formTextError = "text-red-500 text-xs text-left mt-0 ml-2 absolute"
 export const textError = "text-red-400 font-thin text-sm"
 export const textSuccess = "text-green-400 font-thin text-sm"
+export const inputClass = "Input bg-[#282f3d] px-3 py-2 text-sm font-light w-full my-1"
