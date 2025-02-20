@@ -1,5 +1,6 @@
 import { getAPIURL, tokenHeader } from './shared';
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { queryClient } from '../App';
 import axios from "axios";
 
 const baseURL = getAPIURL() + "/tasks";
@@ -20,8 +21,16 @@ export interface Task {
     createdBy: number;
 }
 
+export interface NewTask {
+    title: string;
+    description: string;
+    assignee: number;
+    dueDate: string;
+    status: string;
+}
+
 export interface getTasksResponse {
-    data: Task[];
+    docs: Task[];
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     limit: number;
@@ -39,6 +48,15 @@ export function getTasksQuery() {
         queryFn: async (): Promise<getTasksResponse> => {
             const response = await axios.get(`${baseURL}`, { headers: tokenHeader })
             return response.data
+        }
+    })
+}
+
+export function addTaskMutation() {
+    return useMutation({
+        mutationFn: (newTask: NewTask) => axios.post('/api/tasks', newTask, { headers: tokenHeader }),
+        onSettled: async () => {
+            return await queryClient.invalidateQueries({ queryKey: ['tasks'] })
         }
     })
 }
