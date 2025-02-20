@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { navLinkClass } from "../styles/styles";
+import { navLinkClass, buttonStyleDefault } from "../styles/styles";
 import { useAuth } from "../context";
 // import { logoutMutation } from "../api/auth";
+
+
 
 export default function Navbar() {
     const { user, isAuthenticated, setAuthUser, authLoading } = useAuth();
@@ -15,10 +17,11 @@ export default function Navbar() {
             {user && user.firstName && <p className="text-white">Welcome, {user.firstName}!</p>}
             <div className="flex gap-5">
                 {isAuthenticated ? <div className="flex gap-4">
+                    <button className={buttonStyleDefault}>Create Task</button>
                     <NavLink to="/dashboard" className={navLinkClass}>
                         Dashboard
                     </NavLink>
-                    <button onClick={() => setAuthUser(null)} className="cursor-pointer bg-[#282f3d] text-white px-4 py-2 ">
+                    <button onClick={() => setAuthUser(null)} className={buttonStyleDefault}>
                         Logout
                     </button>
                 </div> :

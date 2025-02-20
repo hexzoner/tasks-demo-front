@@ -1,17 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from "axios";
-import { storeToken, restoreToken } from '../utils/storage';
+import { storeToken } from '../utils/storage';
 import { useAuth } from '../context';
+import { getAPIURL, tokenHeader } from './shared';
 
-const API_URL = import.meta.env.VITE_API_URL;
-if (!API_URL) throw new Error("API URL is required, are you missing a .env file?");
-const baseURL = `${API_URL}/users`;
-
-export const tokenHeader =
-{
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${restoreToken()}`,
-}
+const baseURL = getAPIURL() + "/users";
 
 
 export function loginMutation(onSuccess: (data: any) => void) {
@@ -53,6 +46,29 @@ export function signUpMutation(onSuccess: (data: any) => void) {
     })
 }
 
+interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    roles: string[];
+}
+
+interface AuthMeResponse {
+    user: User,
+    token: string
+}
+
+export function authMeQuery() {
+    return useQuery({
+        queryKey: ['authMe'],
+        queryFn: async (): Promise<AuthMeResponse> => {
+            const response = await axios.get(`${baseURL}/me`, { headers: tokenHeader })
+            return response.data
+        }
+    })
+}
+
 // export function logoutMutation() {
 //     const { setAuthUser } = useAuth()
 //     return useMutation({
@@ -89,25 +105,3 @@ export function signUpMutation(onSuccess: (data: any) => void) {
 //     })
 // }
 
-interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    roles: string[];
-}
-
-interface AuthMeResponse {
-    user: User,
-    token: string
-}
-
-export function authMeQuery() {
-    return useQuery({
-        queryKey: ['authMe'],
-        queryFn: async (): Promise<AuthMeResponse> => {
-            const response = await axios.get(`${baseURL}/me`, { headers: tokenHeader })
-            return response.data
-        }
-    })
-}

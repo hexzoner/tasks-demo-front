@@ -13,7 +13,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       setAuthUser(data.user);
       storeToken(data.token);
     }
