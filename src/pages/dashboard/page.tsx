@@ -20,13 +20,7 @@ import { formatDateShort, truncateText } from '../../utils/dateUtils';
 import { Filter } from '../../components/Tables';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { centerScreenStyle, mainColorBg } from '../../styles/styles';
-
-interface User {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-}
+import { User } from '../../api/auth';
 
 export const Page: FC = () => {
     const [searchParams] = useSearchParams();
@@ -50,7 +44,7 @@ export const Page: FC = () => {
     const [pagination, setPagination] = React.useState<PaginationState>(initialPagination)
 
     const { data, isLoading, isError: isGetTasksError } = getTasksQuery(pagination);
-    // const { isPending, submittedAt, variables, mutate, isError: isAddTaskError } = addTaskMutation();
+
     if (isGetTasksError) return <div className={centerScreenStyle}>Error fetching tasks...</div>
 
     const [sorting, setSorting] = React.useState<SortingState>(initialSorting)
@@ -76,9 +70,9 @@ export const Page: FC = () => {
         navigate({ search: params.toString() }, { replace: true });
     }, [sorting, columnFilters, pagination, navigate]);
 
-    React.useEffect(() => {
-        if (data) console.log(data)
-    }, [data])
+    // React.useEffect(() => {
+    //     if (data) console.log(data)
+    // }, [data])
 
     const columns = React.useMemo<ColumnDef<Task>[]>(
         () => [
@@ -110,7 +104,8 @@ export const Page: FC = () => {
                 header: 'Assignee',
                 cell: info => {
                     const user = info.getValue() as User;
-                    return user.firstName ? `${user.firstName} ${user.lastName} ${user.email}` : user.email
+                    return `${user.firstName ? user.firstName : ''} ${user.lastName ? user.lastName : ''} ${user.firstName || user.lastName ? `(${user.email})` : user.email}`
+                    // return user.firstName ? `${user.firstName} ${user.lastName} ${user.email}` : user.email
                 },
                 // meta: {
                 //     filterVariant: 'select',
@@ -130,7 +125,7 @@ export const Page: FC = () => {
                 accessorKey: 'createdAt',
                 header: 'Created At',
                 cell: info => formatDateShort(info.getValue() as string),
-                // sortingFn: 'datetime' //make sure table knows this is a datetime column (usually can detect if no null values)
+                sortingFn: 'datetime'
             },
             {
                 accessorKey: 'dueDate',

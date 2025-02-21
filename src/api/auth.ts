@@ -46,8 +46,8 @@ export function signUpMutation(onSuccess: (data: any) => void) {
     })
 }
 
-interface User {
-    id: number;
+export interface User {
+    id?: number;
     firstName: string;
     lastName: string;
     email: string;
@@ -66,6 +66,30 @@ export function authMeQuery() {
             const response = await axios.get(`${baseURL}/me`, { headers: tokenHeader })
             return response.data
         }
+    })
+}
+
+
+export interface getUsersResponse {
+    docs: User[];
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    limit: number;
+    nextPage: number;
+    page: number;
+    pagingCounter: number;
+    prevPage: number;
+    totalDocs: number;
+    totalPages: number;
+}
+
+export function getUsersQuery() {
+    return useQuery({
+        queryKey: ['getUsers'],
+        queryFn: async (): Promise<getUsersResponse> => {
+            const response = await axios.get(`${baseURL}`, { headers: tokenHeader })
+            return response.data
+        },
     })
 }
 

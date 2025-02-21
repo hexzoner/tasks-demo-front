@@ -13,7 +13,7 @@ export enum TaskStatus {
 }
 
 export interface Task {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     assignee: number;
@@ -58,9 +58,12 @@ export function getTasksQuery(pagination: PaginationState) {
 
 export function addTaskMutation() {
     return useMutation({
-        mutationFn: (newTask: NewTask) => axios.post('/api/tasks', newTask, { headers: tokenHeader }),
+        mutationFn: (newTask: NewTask) => axios.post(baseURL, newTask, { headers: tokenHeader }),
         onSettled: async () => {
             return await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-        }
+        },
+        onError(error) {
+            console.log(error)
+        },
     })
 }

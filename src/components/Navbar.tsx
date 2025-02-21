@@ -17,7 +17,9 @@ export default function Navbar() {
             {user && user.firstName && <p className="text-white">Welcome, {user.firstName}!</p>}
             <div className="flex gap-5">
                 {isAuthenticated ? <div className="flex gap-4">
-                    <button className={buttonStyleDefault}>Create Task</button>
+                    <NavLink to="/create-task" className={navLinkClass}>
+                        Create Task
+                    </NavLink>
                     <NavLink to="/dashboard" className={navLinkClass}>
                         Dashboard
                     </NavLink>

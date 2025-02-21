@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-query'
 
 import { secondaryColorBg } from './styles/styles';
+import CreateTask from './pages/create-task/page';
 
 export const queryClient = new QueryClient()
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route element={<ProtectedLayout />}>
         <Route index element={<Dashboard />} />
         <Route index path="dashboard" element={<Dashboard />} />
+        <Route path="create-task" element={<CreateTask />} />
       </Route>
 
       <Route path="unauthorized" element={<Unauthorized />} />
