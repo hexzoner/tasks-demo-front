@@ -12,6 +12,8 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
+import { secondaryColorBg } from './styles/styles';
+
 export const queryClient = new QueryClient()
 
 const router = createBrowserRouter(
@@ -32,7 +34,7 @@ const router = createBrowserRouter(
 )
 
 export default function App() {
-  return <div className='bg-gray-900'>
+  return <div className={secondaryColorBg}>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>

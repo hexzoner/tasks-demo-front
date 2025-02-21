@@ -19,3 +19,7 @@ export const textError = "text-red-400 font-thin text-sm"
 export const textSuccess = "text-green-400 font-thin text-sm"
 export const inputClass = "Input bg-[#282f3d] px-3 py-2 text-sm font-light w-full my-1"
 export const buttonStyleDefault = "cursor-pointer bg-[#282f3d] text-white px-4 py-2 hover:opacity-85";
+export const centerScreenStyle = "flex justify-center items-center h-screen";
+export const mainColorBg = "bg-[#18202f]"
+export const secondaryColorBg = "bg-gray-900"
+export const textColor = "text-gray-400"
