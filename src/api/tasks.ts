@@ -22,6 +22,7 @@ export interface Task {
     dueDate: string;
     status: string;
     createdBy: number;
+    createdAt: string;
 }
 
 export interface NewTask {

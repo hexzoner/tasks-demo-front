@@ -20,7 +20,6 @@ import { formatDateShort, truncateText } from '../../utils/dateUtils';
 import { Filter } from '../../components/Tables';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { centerScreenStyle, mainColorBg } from '../../styles/styles';
-import { User } from '../../api/auth';
 
 export const Page: FC = () => {
     const [searchParams] = useSearchParams();
@@ -124,14 +123,16 @@ export const Page: FC = () => {
             {
                 accessorKey: 'createdAt',
                 header: 'Created At',
-                cell: info => formatDateShort(info.getValue() as string),
-                sortingFn: 'datetime'
+                cell: info => formatDateShort(info.row.original.createdAt),
+                sortingFn: 'datetime',
+                accessorFn: row => formatDateShort(row.createdAt)
             },
             {
                 accessorKey: 'dueDate',
                 header: 'Due Date',
-                cell: info => formatDateShort(info.getValue() as string),
-                sortingFn: 'datetime' //make sure table knows this is a datetime column (usually can detect if no null values)
+                cell: info => formatDateShort(info.row.original.dueDate),
+                sortingFn: 'datetime', //make sure table knows this is a datetime column (usually can detect if no null values)
+                accessorFn: row => formatDateShort(row.dueDate)
             },
         ],
         []
