@@ -29,7 +29,7 @@ export const CreateTask: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Task>();
+    } = useForm<NewTask>();
 
     const taskStatusArray = Object.keys(TaskStatus);
     const { data: usersData, isLoading } = getUsersQuery();

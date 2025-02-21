@@ -83,6 +83,7 @@ export const Page: FC = () => {
                 cell: info => info.getValue(),
                 header: () => <span>ID</span>,
                 sortDescFirst: true, //first sort order will be descending
+                filterFn: 'includesString', // Ensures string filtering even if ID is a number
             },
             {
                 accessorFn: row => row.title,
@@ -104,13 +105,11 @@ export const Page: FC = () => {
                 accessorKey: 'assignee',
                 header: 'Assignee',
                 cell: info => {
-                    const user = info.getValue() as User;
+                    const user = info.row.original.assignee; // Get full User object from the row data
                     return `${user.firstName ? user.firstName : ''} ${user.lastName ? user.lastName : ''} ${user.firstName || user.lastName ? `(${user.email})` : user.email}`
-                    // return user.firstName ? `${user.firstName} ${user.lastName} ${user.email}` : user.email
                 },
-                // meta: {
-                //     filterVariant: 'select',
-                // },
+                filterFn: 'includesString',
+                accessorFn: row => `${row.assignee.firstName} ${row.assignee.lastName} (${row.assignee.email})`.trim(), //convert user object to string for filtering
             },
             {
                 accessorKey: 'status',

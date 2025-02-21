@@ -12,11 +12,13 @@ export enum TaskStatus {
     done = 'Done'
 }
 
+import { User } from './auth';
+
 export interface Task {
     id?: number;
     title: string;
     description: string;
-    assignee: number;
+    assignee: User;
     dueDate: string;
     status: string;
     createdBy: number;
