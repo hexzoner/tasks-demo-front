@@ -37,7 +37,7 @@ export const Page: FC = () => {
     });
 
     const initialPagination: PaginationState = {
-        pageIndex: Number(searchParams.get('page') ?? 0) - 1,
+        pageIndex: Number(searchParams.get('page') ?? 1) - 1,
         pageSize: Number(searchParams.get('limit') ?? 10),
     };
 
@@ -68,6 +68,7 @@ export const Page: FC = () => {
         params.set('limit', pagination.pageSize.toString());
 
         navigate({ search: params.toString() }, { replace: true });
+
     }, [sorting, columnFilters, pagination, navigate]);
 
     // React.useEffect(() => {
@@ -222,10 +223,10 @@ export const Page: FC = () => {
                 <tbody>
                     {table.getRowModel().rows.map(row => {
                         return (
-                            <tr key={row.id}>
+                            <tr key={row.id} className='cursor-pointer hover:bg-gray-700'>
                                 {row.getVisibleCells().map(cell => {
                                     return (
-                                        <td className='p-3 text-center' key={cell.id}>
+                                        <td className='p-3 text-center ' key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     )
