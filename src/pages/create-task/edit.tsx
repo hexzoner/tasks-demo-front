@@ -40,9 +40,9 @@ export const EditTask: FC = () => {
     const { isPending } = editTaskMutation();
     const editTask = editTaskMutation();
 
-    React.useEffect(() => {
-        if (taskData) console.log(taskData)
-    }, [taskData])
+    // React.useEffect(() => {
+    //     if (taskData) console.log(taskData)
+    // }, [taskData])
 
     function handleEditTask(data: Task) {
         console.log(data)
@@ -58,6 +58,7 @@ export const EditTask: FC = () => {
 
     if (isLoading) return <div className="min-h-screen text-center">Loading...</div>
 
+
     return (
         <div className="min-h-screen">
             {taskData ? <div className="flex flex-col items-center">
@@ -72,7 +73,7 @@ export const EditTask: FC = () => {
                     taskStatusArray={taskStatusArray}
                     usersData={usersData}
                     isPending={isPending}
-                    readOnly={taskData.createdBy.id !== user.id}
+                    readOnly={taskData.createdBy.id !== user.id && !user.roles.includes("admin")}
                 />
 
             </div> :

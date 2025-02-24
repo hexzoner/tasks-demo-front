@@ -9,7 +9,7 @@ import { NewTask } from "../../api/tasks";
 
 export const taskSchema = z.object({
     title: z.string(),
-    description: z.string(),
+    description: z.string() || z.number(),
     dueDate: z.string().refine((date) => {
         return new Date(date) > new Date();
     },
