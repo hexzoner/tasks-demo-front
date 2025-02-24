@@ -1,13 +1,14 @@
 import { Flex, Section, Button } from "@radix-ui/themes"
-import { formTextError, inputClass, sLoginSection, sButtonSubmit, textError } from '../../styles/styles';
+import { formTextError, inputClass, sLoginSection, sButtonSubmit, textError, sButton } from '../../styles/styles';
 import { Form } from "radix-ui";
 import { Navigate } from "react-router-dom";
 import { TaskStatus } from "../../api/tasks";
 import { getUserNameFromUser } from "./page";
 import { User } from "../../api/auth";
+import DialogConfirm from "../../components/DialogConfirm";
 
 export function CreateTaskForm({ mutation, register, errors, handleSubmit,
-    handleCreateTask, taskStatusArray, usersData, isPending, readOnly
+    handleCreateTask, taskStatusArray, usersData, isPending, readOnly, buttonText, handleDeleteTask
 }: {
     mutation: any,
     register: any,
@@ -18,6 +19,8 @@ export function CreateTaskForm({ mutation, register, errors, handleSubmit,
     errors: any
     isPending: boolean
     readOnly: boolean
+    buttonText?: string
+    handleDeleteTask?: () => void
 }) {
     return <Section style={sLoginSection} className='w-full mx-auto mb-12'>
         {/* <p style={{ textAlign: "center", fontSize: "1.5rem", padding: "1rem" }}>Login</p> */}
@@ -114,7 +117,18 @@ export function CreateTaskForm({ mutation, register, errors, handleSubmit,
                     {errors.assignee && <p className={formTextError}>{errors.assignee.message?.toString()}</p>}
                 </Form.Field>
 
-                {!isPending && !readOnly && <Button type='submit' color="green" variant="soft" style={sButtonSubmit}>Submit</Button>}
+
+                {!isPending && !readOnly && <Button type='submit' color="green" variant="soft" style={sButtonSubmit}>{buttonText ? buttonText : "Submit"}</Button>}
+                {handleDeleteTask && !readOnly && <>
+                    <Button style={sButton} type='button' color="red" variant="soft" onClick={(e: any) => {
+                        e.preventDefault();
+                        const dialog = document.getElementById("confirmPopup") as HTMLDialogElement;
+                        dialog.showModal();
+                    }}>Delete Task</Button>
+                    <div className="absolute">
+                        <DialogConfirm deleteConfirmed={handleDeleteTask} confirmText="Are you sure you want to delete this task?" />
+                    </div>
+                </>}
 
                 <div className='text-center'>
                     {mutation.isError ? (<div className={textError}>Error: Something went wrong...</div>) : null}
@@ -122,6 +136,10 @@ export function CreateTaskForm({ mutation, register, errors, handleSubmit,
                 </div>
             </Flex>
         </Form.Root>
+
         }
+        {handleDeleteTask && <div className="absolute top-0 left-0 ">
+            <DialogConfirm deleteConfirmed={handleDeleteTask} confirmText="Are you sure you want to delete this task?" />
+        </div>}
     </Section>
 }

@@ -113,3 +113,17 @@ export function editTaskMutation() {
         },
     })
 }
+
+export function deleteTaskMutation() {
+    return useMutation({
+        mutationFn: (id: number) => axios.delete(`${baseURL}/${id}`, {
+            headers: getAuthHeader()
+        }),
+        onSettled: async () => {
+            return await queryClient.invalidateQueries({ queryKey: ['getTasks'] })
+        },
+        onError(error) {
+            console.log(error)
+        },
+    })
+}

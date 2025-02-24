@@ -100,6 +100,7 @@ export const Page: FC = () => {
                 header: 'Created By',
                 cell: info => {
                     const user = info.row.original.createdBy; // Get full User object from the row data
+                    if (!user) return 'Unknown';
                     return `${user.firstName ? user.firstName : ''} ${user.lastName ? user.lastName : ''} ${user.firstName || user.lastName ? `(${user.email})` : user.email}`
                 },
                 filterFn: 'includesString',

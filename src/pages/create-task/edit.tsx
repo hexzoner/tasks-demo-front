@@ -1,18 +1,25 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { getUsersQuery } from "../../api/auth";
-import { TaskStatus, getTaskByIdQuery, editTaskMutation, Task } from "../../api/tasks";
+import { TaskStatus, getTaskByIdQuery, editTaskMutation, Task, deleteTaskMutation } from "../../api/tasks";
 import { CreateTaskForm } from "./CreateTaskForm";
 // import { NewTask } from "../../api/tasks";
 import { taskSchema } from "./page";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
+
 
 
 export const EditTask: FC = () => {
     const { user } = useAuth();
+    const nav = useNavigate()
     const { id } = useParams<{ id: string }>();
-    const { data: taskData, isLoading: taskIsLoading } = id ? getTaskByIdQuery(id) : { data: null, isLoading: false };
+    const { data: taskData,
+        // isLoading: taskIsLoading 
+    } = id ? getTaskByIdQuery(id) : {
+        data: null,
+        // isLoading: false
+    };
     const {
         register,
         handleSubmit,
@@ -40,9 +47,14 @@ export const EditTask: FC = () => {
     const { isPending } = editTaskMutation();
     const editTask = editTaskMutation();
 
-    // React.useEffect(() => {
-    //     if (taskData) console.log(taskData)
-    // }, [taskData])
+    const deleteTask = deleteTaskMutation();
+
+    function handleDeleteTask() {
+        if (taskData && taskData.id !== undefined) deleteTask.mutate(taskData.id)
+        nav('/dashboard')
+    }
+
+
 
     function handleEditTask(data: Task) {
         console.log(data)
@@ -62,8 +74,8 @@ export const EditTask: FC = () => {
     return (
         <div className="min-h-screen">
             {taskData ? <div className="flex flex-col items-center">
-                <p className="text-center mt-6 text-2xl mb-4">Edit Task {taskData?.id}</p>
-                <p className="mb-2">Created By: {taskData.createdBy.firstName} {taskData.createdBy.lastName} {taskData.createdBy.email}</p>
+                <p className="text-center mt-6 text-2xl mb-4">Edit Task #{taskData?.id}</p>
+                {taskData.createdBy && <p className="mb-2">Created By: {taskData.createdBy.firstName} {taskData.createdBy.lastName} {taskData.createdBy.email}</p>}
                 <CreateTaskForm
                     mutation={editTask}
                     register={register}
@@ -73,7 +85,9 @@ export const EditTask: FC = () => {
                     taskStatusArray={taskStatusArray}
                     usersData={usersData}
                     isPending={isPending}
-                    readOnly={taskData.createdBy.id !== user.id && !user.roles.includes("admin")}
+                    readOnly={taskData.createdBy?.id !== user.id && !user.roles.includes("admin")}
+                    buttonText="Update Task"
+                    handleDeleteTask={handleDeleteTask}
                 />
 
             </div> :

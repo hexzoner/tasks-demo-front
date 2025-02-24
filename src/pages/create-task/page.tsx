@@ -35,13 +35,14 @@ export const CreateTask: FC = () => {
     const { isPending } = addTaskMutation();
     const addTask = addTaskMutation();
 
+
     // React.useEffect(() => {
     //     if (usersData) console.log(usersData.docs)
     // }
     //     , [usersData])
 
     function handleCreateTask(data: NewTask) {
-        console.log(data)
+        // console.log(data)
         try {
             if (taskSchema.parse(data)) {
                 console.log("Validation successful")
@@ -67,6 +68,7 @@ export const CreateTask: FC = () => {
                 usersData={usersData}
                 isPending={isPending}
                 readOnly={false}
+                buttonText="Create Task"
             />
         </div>
     );
