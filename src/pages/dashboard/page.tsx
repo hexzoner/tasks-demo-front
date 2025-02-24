@@ -90,18 +90,20 @@ export const Page: FC = () => {
             {
                 accessorFn: row => row.title,
                 id: 'title',
-                cell: info => truncateText(info.getValue() as string, 150),
+                cell: info => truncateText(info.getValue() as string, 100),
                 header: () => <span>Title</span>,
                 sortUndefined: 'last', //force undefined values to the end
                 sortDescFirst: false, //first sort order will be ascending (nullable values can mess up auto detection of sort order)
             },
             {
-                accessorFn: row => row.description,
-                id: 'description',
-                cell: info => truncateText(info.getValue() as string, 50),
-                header: () => <span>Description</span>,
-                sortUndefined: 'last', //force undefined values to the end
-                sortDescFirst: false, //first sort order will be ascending (nullable values can mess up auto detection of sort order)
+                accessorKey: 'createdBy',
+                header: 'Created By',
+                cell: info => {
+                    const user = info.row.original.createdBy; // Get full User object from the row data
+                    return `${user.firstName ? user.firstName : ''} ${user.lastName ? user.lastName : ''} ${user.firstName || user.lastName ? `(${user.email})` : user.email}`
+                },
+                filterFn: 'includesString',
+                accessorFn: row => `${row.createdBy.firstName} ${row.createdBy.lastName} (${row.createdBy.email})`.trim(), //convert user object to string for filtering
             },
             {
                 accessorKey: 'assignee',
@@ -226,7 +228,9 @@ export const Page: FC = () => {
                 <tbody>
                     {table.getRowModel().rows.map(row => {
                         return (
-                            <tr key={row.id} className='cursor-pointer hover:bg-gray-700'>
+                            <tr
+                                onClick={() => navigate(`/edit-task/${row.original.id}`)}
+                                key={row.id} className='cursor-pointer hover:bg-gray-700'>
                                 {row.getVisibleCells().map(cell => {
                                     return (
                                         <td className='p-3 text-center ' key={cell.id}>

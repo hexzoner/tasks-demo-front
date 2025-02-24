@@ -40,7 +40,7 @@ export const Page: FC = () => {
     if (login.isPending) return <LoadingSpinner />
 
     return <div className='min-h-screen ' style={sLoginPage}>
-        <Section style={sLoginSection} className='w-full'>
+        <Section style={sLoginSection} className='w-full mx-auto'>
             <p style={{ textAlign: "center", fontSize: "1.5rem", padding: "1rem" }}>Login</p>
             <Form.Root onSubmit={handleSubmit(handleLogin)} className="FormRoot">
                 <Flex direction="column" gap="5" maxWidth="250px" style={{ margin: "auto" }}>

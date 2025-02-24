@@ -50,7 +50,7 @@ export const Page: FC = () => {
     //     console.log(signup.error.response.data.errors[0].data.errors[0].message)
 
     return <div className='min-h-screen ' style={sLoginPage}>
-        <Section style={sLoginSection} className='w-full'>
+        <Section style={sLoginSection} className='w-full mx-auto'>
             <p style={{ textAlign: "center", fontSize: "1.5rem", padding: "1rem" }}>Create Account</p>
             <Form.Root onSubmit={handleSubmit(handleSignup)} className="FormRoot">
                 <Flex direction="column" gap="5" maxWidth="250px" style={{ margin: "auto" }}>

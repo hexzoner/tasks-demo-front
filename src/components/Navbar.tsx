@@ -14,7 +14,7 @@ export default function Navbar() {
     return (
         <div className="bg-[#18202f]  p-5 flex justify-between px-20 items-center">
             <p className="italic font-sans font-semibold text-xl">Task Manager</p>
-            {user && <p className="text-white">{user && user.firstName ? `Welcome, ${user.firstName}!` : `You are logged in as: ${user.email}`}</p>}
+            {user && <p className="text-white">{user && user.firstName ? `Welcome, ${user.firstName}! (${user.email})` : `You are logged in as: ${user.email}`}</p>}
             <div className="flex gap-5">
                 {isAuthenticated ? <div className="flex gap-4">
                     <NavLink to="/create-task" className={navLinkClass}>

@@ -22,8 +22,17 @@ export interface Task {
     assignee: User;
     dueDate: string;
     status: string;
-    createdBy: number;
+    createdBy: User;
     createdAt: string;
+}
+
+export interface EditTask {
+    title: string;
+    description: string;
+    assignee: number;
+    dueDate: string;
+    status: string;
+    createdBy: number;
 }
 
 export interface NewTask {
@@ -64,9 +73,36 @@ export function getTasksQuery(pagination: PaginationState, userId: string) {
     })
 }
 
+export function getTaskByIdQuery(id: string) {
+    return useQuery({
+        queryKey: ['getTaskById', id],
+        queryFn: async (): Promise<Task> => {
+            const response = await axios.get(`${baseURL}/${id}`, {
+                headers: getAuthHeader()
+            })
+            return response.data
+        }
+    })
+}
+
 export function addTaskMutation() {
     return useMutation({
         mutationFn: (newTask: NewTask) => axios.post(baseURL, newTask, {
+            headers: getAuthHeader()
+        }),
+        onSettled: async () => {
+            return await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+        },
+        onError(error) {
+            console.log(error)
+        },
+    })
+}
+
+
+export function editTaskMutation() {
+    return useMutation({
+        mutationFn: (task: Task) => axios.patch(`${baseURL}/${task.id}`, task, {
             headers: getAuthHeader()
         }),
         onSettled: async () => {

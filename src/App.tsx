@@ -14,6 +14,7 @@ import {
 
 import { secondaryColorBg } from './styles/styles';
 import CreateTask from './pages/create-task/page';
+import EditTask from './pages/create-task/edit';
 
 export const queryClient = new QueryClient()
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         <Route index element={<Dashboard />} />
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="create-task" element={<CreateTask />} />
+        <Route path="edit-task/:id" element={<EditTask />} />
       </Route>
 
       <Route path="unauthorized" element={<Unauthorized />} />

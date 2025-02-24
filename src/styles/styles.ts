@@ -4,8 +4,9 @@ export const sLoginPage = {
 }
 
 export const sLoginSection = {
-    maxWidth: "640px", margin: "auto", backgroundColor: "var(--gray-a2)", borderRadius: "var(--radius-3)",
+    maxWidth: "640px", backgroundColor: "var(--gray-a2)", borderRadius: "var(--radius-3)",
     paddingTop: "0rem", paddingBottom: "4rem", boxShadow: "var(--shadow-2)", border: "1px solid var(--gray-a4)",
+    marginX: "auto"
 }
 
 export const sButtonSubmit = { cursor: "pointer", marginTop: "1rem", padding: "1rem 2rem" }
