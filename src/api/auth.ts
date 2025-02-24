@@ -2,10 +2,9 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from "axios";
 import { storeToken } from '../utils/storage';
 import { useAuth } from '../context';
-import { getAPIURL, tokenHeader } from './shared';
+import { getAPIURL, getAuthHeader } from './shared';
 
 const baseURL = getAPIURL() + "/users";
-
 
 export function loginMutation(onSuccess: (data: any) => void) {
     const { setAuthUser } = useAuth()
@@ -22,6 +21,7 @@ export function loginMutation(onSuccess: (data: any) => void) {
             storeToken(data.data.token)
             setAuthUser(data.data.user)
             onSuccess(data)
+
         },
         // onSettled: (data, error, variables, context?: { id: string }) => {
         //     // Error or success... doesn't matter!
@@ -30,20 +30,21 @@ export function loginMutation(onSuccess: (data: any) => void) {
 }
 
 export function signUpMutation(onSuccess: (data: any) => void) {
-    const { setAuthUser } = useAuth()
+    const login = loginMutation(onSuccess)
+
     return useMutation({
-        mutationFn: (data: any) => {
-            return axios.post(`${baseURL}`, data)
+        mutationFn: async (data: any) => {
+            await axios.post(`${baseURL}`, data);
+            login.mutate({ email: data.email, password: data.password });
         },
         onError: (error: any) => {
-            console.log(error.response.data.errors[0].name, error.response.data.errors[0].message)
+            console.log(
+                "Error:",
+                error.response?.data?.errors?.[0]?.name,
+                error.response?.data?.errors?.[0]?.message
+            );
         },
-        onSuccess: (data) => {
-            storeToken(data.data.token)
-            setAuthUser(data.data.user)
-            onSuccess(data)
-        },
-    })
+    });
 }
 
 export interface User {
@@ -63,7 +64,9 @@ export function authMeQuery() {
     return useQuery({
         queryKey: ['authMe'],
         queryFn: async (): Promise<AuthMeResponse> => {
-            const response = await axios.get(`${baseURL}/me`, { headers: tokenHeader })
+            const response = await axios.get(`${baseURL}/me`, {
+                headers: getAuthHeader()
+            })
             return response.data
         }
     })
@@ -87,7 +90,9 @@ export function getUsersQuery() {
     return useQuery({
         queryKey: ['getUsers'],
         queryFn: async (): Promise<getUsersResponse> => {
-            const response = await axios.get(`${baseURL}`, { headers: tokenHeader })
+            const response = await axios.get(`${baseURL}`, {
+                headers: getAuthHeader()
+            })
             return response.data
         },
     })

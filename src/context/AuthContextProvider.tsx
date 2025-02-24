@@ -4,6 +4,7 @@ import { deleteToken, storeToken } from "../utils/storage";
 import { authMeQuery } from "../api/auth";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
+
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

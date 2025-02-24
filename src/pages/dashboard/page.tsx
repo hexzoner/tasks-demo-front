@@ -20,10 +20,13 @@ import { formatDateShort, truncateText } from '../../utils/dateUtils';
 import { Filter } from '../../components/Tables';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { centerScreenStyle, mainColorBg } from '../../styles/styles';
+import { useAuth } from '../../context';
+
 
 export const Page: FC = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     // Get initial state from URL
     const initialSorting: SortingState = searchParams.get('sort')
@@ -42,7 +45,7 @@ export const Page: FC = () => {
 
     const [pagination, setPagination] = React.useState<PaginationState>(initialPagination)
 
-    const { data, isLoading, isError: isGetTasksError } = getTasksQuery(pagination);
+    const { data, isLoading, isError: isGetTasksError } = getTasksQuery(pagination, user.id);
 
     if (isGetTasksError) return <div className={centerScreenStyle}>Error fetching tasks...</div>
 

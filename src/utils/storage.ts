@@ -7,7 +7,13 @@ export function storeToken(token: string) {
 export function restoreToken() {
   const token = localStorage.getItem(tokenKey);
   if (!token) return null;
-  else return JSON.parse(token);
+
+  try {
+    return JSON.parse(token);
+  } catch (error) {
+    console.log("Error parsing token:", error);
+    return null;
+  }
 }
 
 export function deleteToken() {

@@ -8,10 +8,16 @@ import { loginMutation } from '../../api/auth';
 import { formTextError, textError, textSuccess, inputClass } from '../../styles/styles';
 import { useNavigate } from 'react-router-dom';
 
+interface Login {
+    email: string;
+    password: string;
+}
+
 export const Page: FC = () => {
+
     const nav = useNavigate()
 
-    function onSuccess(data: any) {
+    async function onSuccess(data: any) {
         console.log(data.data.token)
         console.log(data.data.user)
         //redirect user to dashboard
@@ -24,9 +30,9 @@ export const Page: FC = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<{ email: string; password: string }>();
+    } = useForm<Login>();
 
-    function handleLogin(data: { email: string; password: string }) {
+    function handleLogin(data: Login) {
         console.log(data)
         login.mutate(data)
     }

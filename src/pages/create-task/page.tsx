@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Flex, Section, Button } from "@radix-ui/themes"
 import { formTextError, inputClass, sLoginSection, sButtonSubmit, textError } from '../../styles/styles';
 import { Form } from "radix-ui";
-import { addTaskMutation, Task } from "../../api/tasks";
+import { addTaskMutation } from "../../api/tasks";
 import { getUsersQuery, User } from "../../api/auth";
 import { TaskStatus } from "../../api/tasks";
 import { Navigate } from "react-router-dom";
@@ -56,6 +56,8 @@ export const CreateTask: FC = () => {
             console.log("Validation error:", error);
         }
     }
+
+    if (isLoading) return <div className="min-h-screen text-center">Loading...</div>
 
     return (
         <div className="min-h-screen">

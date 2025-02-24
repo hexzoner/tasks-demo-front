@@ -14,7 +14,7 @@ export default function Navbar() {
     return (
         <div className="bg-[#18202f]  p-5 flex justify-between px-20 items-center">
             <p className="italic font-sans font-semibold text-xl">Task Manager</p>
-            {user && user.firstName && <p className="text-white">Welcome, {user.firstName}!</p>}
+            {user && <p className="text-white">{user && user.firstName ? `Welcome, ${user.firstName}!` : `You are logged in as: ${user.email}`}</p>}
             <div className="flex gap-5">
                 {isAuthenticated ? <div className="flex gap-4">
                     <NavLink to="/create-task" className={navLinkClass}>
@@ -23,7 +23,7 @@ export default function Navbar() {
                     <NavLink to="/dashboard" className={navLinkClass}>
                         Dashboard
                     </NavLink>
-                    <button onClick={() => setAuthUser(null)} className={buttonStyleDefault}>
+                    <button onClick={() => setAuthUser(null)} className={buttonStyleDefault + " hover:underline"}>
                         Logout
                     </button>
                 </div> :

@@ -6,8 +6,9 @@ export function getAPIURL() {
     return API_URL;
 }
 
-export const tokenHeader =
-{
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${restoreToken()}`,
+export function getAuthHeader() {
+    return {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${restoreToken()}`,
+    }
 }
