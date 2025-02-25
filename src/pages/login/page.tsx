@@ -17,9 +17,9 @@ export const Page: FC = () => {
 
     const nav = useNavigate()
 
-    async function onSuccess(data: any) {
-        console.log(data.data.token)
-        console.log(data.data.user)
+    async function onSuccess() {
+        // console.log(data.data.token)
+        // console.log(data.data.user)
         //redirect user to dashboard
         nav('/dashboard')
     }
@@ -33,7 +33,7 @@ export const Page: FC = () => {
     } = useForm<Login>();
 
     function handleLogin(data: Login) {
-        console.log(data)
+        // console.log(data)
         login.mutate(data)
     }
 
