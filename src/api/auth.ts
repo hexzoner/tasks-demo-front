@@ -29,13 +29,13 @@ export function loginMutation(onSuccess: (data: any) => void) {
     })
 }
 
-export function signUpMutation(onSuccess: (data: any) => void) {
+export function signUpMutation(onSuccess: (data: SignUp) => void) {
     const login = loginMutation(onSuccess)
 
     return useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: SignUp) => {
             await axios.post(`${baseURL}`, data);
-            login.mutate({ email: data.email, password: data.password });
+            login.mutate(data);
         },
         onError: (error: any) => {
             console.log(
@@ -53,6 +53,15 @@ export interface User {
     lastName: string;
     email: string;
     roles: string[];
+}
+
+
+export interface SignUp {
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    repeatPassword: string;
 }
 
 interface AuthMeResponse {
@@ -85,6 +94,7 @@ export interface getUsersResponse {
     totalDocs: number;
     totalPages: number;
 }
+
 
 export function getUsersQuery() {
     return useQuery({

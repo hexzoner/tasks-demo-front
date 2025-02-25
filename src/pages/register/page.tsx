@@ -4,15 +4,9 @@ import { Flex, Section, Button } from "@radix-ui/themes"
 import { Form } from "radix-ui";
 import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { signUpMutation } from '../../api/auth';
+import { signUpMutation, SignUp } from '../../api/auth';
 import { formTextError, textError, textSuccess, inputClass } from '../../styles/styles';
 import { useNavigate } from 'react-router-dom';
-
-interface SignUp {
-    email: string;
-    password: string;
-    repeatPassword: string;
-}
 
 export const Page: FC = () => {
     const nav = useNavigate()
@@ -71,6 +65,30 @@ export const Page: FC = () => {
                                 className={inputClass} type="email" required placeholder='Enter your email' />
                         </Form.Control>
                         {errors.email && <p className={formTextError}>{errors.email.message?.toString()}</p>}
+                    </Form.Field>
+
+                    <Form.Field className="FormField" name="firstName">
+                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", }}>
+                            <Form.Label className="FormLabel">First Name (optional)</Form.Label>
+                        </div>
+                        <Form.Control asChild>
+                            <input
+                                {...register("firstName")}
+                                className={inputClass} type="text" placeholder='Enter your first name' />
+                        </Form.Control>
+                        {errors.firstName && <p className={formTextError}>{errors.firstName.message?.toString()}</p>}
+                    </Form.Field>
+
+                    <Form.Field className="FormField" name="lastName">
+                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", }}>
+                            <Form.Label className="FormLabel">Last Name (optional)</Form.Label>
+                        </div>
+                        <Form.Control asChild>
+                            <input
+                                {...register("lastName")}
+                                className={inputClass} type="text" placeholder='Enter your last name' />
+                        </Form.Control>
+                        {errors.lastName && <p className={formTextError}>{errors.lastName.message?.toString()}</p>}
                     </Form.Field>
 
                     <Form.Field className="FormField" name="password">
