@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useForm } from "react-hook-form";
 import { Flex, Section, Button } from "@radix-ui/themes"
 import { Form } from "radix-ui";
-import { sLoginSection, sLoginPage, sButtonSubmit } from "../../styles/styles"
+import { sLoginSection, sButtonSubmit } from "../../styles/styles"
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { signUpMutation, SignUp } from '../../api/auth';
 import { formTextError, textError, textSuccess, inputClass } from '../../styles/styles';
@@ -43,7 +43,7 @@ export const Page: FC = () => {
     // if (signup.error.response.data.errors[0].data.errors[0])
     //     console.log(signup.error.response.data.errors[0].data.errors[0].message)
 
-    return <div className='min-h-screen ' style={sLoginPage}>
+    return <div className='min-h-screen mt-12' >
         <Section style={sLoginSection} className='w-full mx-auto'>
             <p style={{ textAlign: "center", fontSize: "1.5rem", padding: "1rem" }}>Create Account</p>
             <Form.Root onSubmit={handleSubmit(handleSignup)} className="FormRoot">
