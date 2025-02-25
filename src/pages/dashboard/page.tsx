@@ -11,7 +11,8 @@ import {
     ColumnFiltersState,
     getFilteredRowModel,
     getPaginationRowModel,
-    PaginationState
+    PaginationState,
+    FilterFn
 } from '@tanstack/react-table'
 
 import { Pagination } from '../../components/Tables';
@@ -77,6 +78,11 @@ export const Page: FC = () => {
     //     if (data) console.log(data)
     // }, [data])
 
+    const filterByFormattedDate: FilterFn<Task> = (row, columnId, filterValue) => {
+        const formattedDate = formatDateShort(row.getValue(columnId));
+        return formattedDate.includes(filterValue);
+    };
+
     const columns = React.useMemo<ColumnDef<Task>[]>(
         () => [
             {
@@ -131,14 +137,16 @@ export const Page: FC = () => {
                 header: 'Created At',
                 cell: info => formatDateShort(info.row.original.createdAt),
                 sortingFn: 'datetime',
-                accessorFn: row => formatDateShort(row.createdAt)
+                accessorFn: row => row.dueDate,
+                filterFn: filterByFormattedDate
             },
             {
                 accessorKey: 'dueDate',
                 header: 'Due Date',
                 cell: info => formatDateShort(info.row.original.dueDate),
                 sortingFn: 'datetime', //make sure table knows this is a datetime column (usually can detect if no null values)
-                accessorFn: row => formatDateShort(row.dueDate)
+                accessorFn: row => row.dueDate,
+                filterFn: filterByFormattedDate,
             },
         ],
         []

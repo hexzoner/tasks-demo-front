@@ -90,7 +90,7 @@ export function getUsersQuery() {
     return useQuery({
         queryKey: ['getUsers'],
         queryFn: async (): Promise<getUsersResponse> => {
-            const response = await axios.get(`${baseURL}`, {
+            const response = await axios.get(`${baseURL}?limit=30`, {
                 headers: getAuthHeader()
             })
             return response.data

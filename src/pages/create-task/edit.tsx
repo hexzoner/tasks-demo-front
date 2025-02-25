@@ -54,8 +54,6 @@ export const EditTask: FC = () => {
         nav('/dashboard')
     }
 
-
-
     function handleEditTask(data: Task) {
         console.log(data)
         try {
@@ -69,12 +67,12 @@ export const EditTask: FC = () => {
     }
 
     if (isLoading) return <div className="min-h-screen text-center">Loading...</div>
-
+    const readOnly = taskData?.createdBy?.id !== user.id && !user.roles.includes("admin")
 
     return (
         <div className="min-h-screen">
             {taskData ? <div className="flex flex-col items-center">
-                <p className="text-center mt-6 text-2xl mb-4">Edit Task #{taskData?.id}</p>
+                <p className="text-center mt-6 text-2xl mb-4">{`${readOnly ? `View Task` : `Edit Task`}`} #{taskData?.id}</p>
                 {taskData.createdBy && <p className="mb-2">Created By: {taskData.createdBy.firstName} {taskData.createdBy.lastName} {taskData.createdBy.email}</p>}
                 <CreateTaskForm
                     mutation={editTask}
@@ -85,7 +83,7 @@ export const EditTask: FC = () => {
                     taskStatusArray={taskStatusArray}
                     usersData={usersData}
                     isPending={isPending}
-                    readOnly={taskData.createdBy?.id !== user.id && !user.roles.includes("admin")}
+                    readOnly={readOnly}
                     buttonText="Update Task"
                     handleDeleteTask={handleDeleteTask}
                 />
