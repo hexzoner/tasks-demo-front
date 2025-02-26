@@ -22,6 +22,7 @@ import { Filter } from '../../components/Tables';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { centerScreenStyle, mainColorBg } from '../../styles/styles';
 import { useAuth } from '../../context';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 export const Page: FC = () => {
@@ -48,6 +49,7 @@ export const Page: FC = () => {
 
     const { data, isLoading, isError: isGetTasksError } = getTasksQuery(pagination, user.id);
 
+    if (isLoading) return <LoadingSpinner />
     if (isGetTasksError) return <div className={centerScreenStyle}>Error fetching tasks...</div>
 
     const [sorting, setSorting] = React.useState<SortingState>(initialSorting)
@@ -190,7 +192,7 @@ export const Page: FC = () => {
     return <div className='min-h-screen max-w-7xl mx-auto '>
         <p className='text-2xl text-center mt-8'>Dashboard</p>
         <div className='flex justify-center items-center gap-4 mt-2 text-lg'>
-            {isLoading ? <p className=''>Loading tasks...</p> : <p className=''>Total Tasks: {data?.totalDocs}</p>}
+            <p className=''>Total Tasks: {data?.totalDocs}</p>
         </div>
         <section className='mt-4 w-full'>
             <table className={`w-full text-gray-300 font-light ${mainColorBg}`}>
