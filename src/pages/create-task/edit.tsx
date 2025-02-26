@@ -66,7 +66,7 @@ export const EditTask: FC = () => {
         }
     }
 
-    if (isLoading || taskIsLoading) return <div className="min-h-screen text-center">Loading...</div>
+    if (isLoading || taskIsLoading) return <div className="min-h-screen text-center flex flex-col items-center">Loading...</div>
     const readOnly = taskData?.createdBy?.id !== user.id && !user.roles.includes("admin")
 
     return (
