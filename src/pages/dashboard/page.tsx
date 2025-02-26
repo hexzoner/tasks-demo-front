@@ -49,7 +49,6 @@ export const Page: FC = () => {
 
     const { data, isLoading, isError: isGetTasksError } = getTasksQuery(pagination, user.id);
 
-    if (isLoading) return <LoadingSpinner />
     if (isGetTasksError) return <div className={centerScreenStyle}>Error fetching tasks...</div>
 
     const [sorting, setSorting] = React.useState<SortingState>(initialSorting)
@@ -188,7 +187,7 @@ export const Page: FC = () => {
 
     //access sorting state from the table instance
     // console.log(table.getState().sorting)
-
+    if (isLoading) return <LoadingSpinner />
     return <div className='min-h-screen max-w-7xl mx-auto '>
         <p className='text-2xl text-center mt-8'>Dashboard</p>
         <div className='flex justify-center items-center gap-4 mt-2 text-lg'>
