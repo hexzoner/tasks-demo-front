@@ -15,7 +15,7 @@ export const EditTask: FC = () => {
     const nav = useNavigate()
     const { id } = useParams<{ id: string }>();
     const { data: taskData,
-        // isLoading: taskIsLoading 
+        isLoading: taskIsLoading
     } = id ? getTaskByIdQuery(id) : {
         data: null,
         // isLoading: false
@@ -66,7 +66,7 @@ export const EditTask: FC = () => {
         }
     }
 
-    if (isLoading) return <div className="min-h-screen text-center">Loading...</div>
+    if (isLoading || taskIsLoading) return <div className="min-h-screen text-center">Loading...</div>
     const readOnly = taskData?.createdBy?.id !== user.id && !user.roles.includes("admin")
 
     return (
