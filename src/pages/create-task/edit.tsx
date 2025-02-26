@@ -55,7 +55,7 @@ export const EditTask: FC = () => {
     }
 
     function handleEditTask(data: Task) {
-        console.log(data)
+        // console.log(data)
         try {
             if (taskSchema.parse(data)) {
                 console.log("Validation successful")
