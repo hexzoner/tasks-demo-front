@@ -7,6 +7,7 @@ import { CreateTaskForm } from "./CreateTaskForm";
 import { taskSchema } from "./page";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 
 
@@ -66,7 +67,7 @@ export const EditTask: FC = () => {
         }
     }
 
-    if (isLoading || taskIsLoading) return <div className="min-h-screen text-center flex flex-col items-center">Loading...</div>
+    if (isLoading || taskIsLoading) return <LoadingSpinner />
     const readOnly = taskData?.createdBy?.id !== user.id && !user.roles.includes("admin")
 
     return (
