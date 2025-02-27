@@ -9,7 +9,7 @@ import { NewTask } from "../../api/tasks";
 
 export const taskSchema = z.object({
     title: z.string(),
-    description: z.string() || z.number(),
+    description: z.string(),
     dueDate: z.string().refine((date) => {
         return new Date(date) > new Date();
     },
@@ -43,9 +43,10 @@ export const CreateTask: FC = () => {
 
     function handleCreateTask(data: NewTask) {
         // console.log(data)
+
         try {
             if (taskSchema.parse(data)) {
-                console.log("Validation successful")
+                // console.log("Validation successful")
                 addTask.mutate(data)
             }
         } catch (error) {

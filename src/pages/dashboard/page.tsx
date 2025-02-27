@@ -23,6 +23,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { centerScreenStyle, mainColorBg } from '../../styles/styles';
 import { useAuth } from '../../context';
 import LoadingSpinner from '../../components/LoadingSpinner';
+// import { useMutationState } from '@tanstack/react-query';
+// import { NewTask } from '../../api/tasks';
 
 
 export const Page: FC = () => {
@@ -185,8 +187,13 @@ export const Page: FC = () => {
         // maxMultiSortColCount: 3, // only allow 3 columns to be sorted at once - default is Infinity
     })
 
-    //access sorting state from the table instance
-    // console.log(table.getState().sorting)
+    // access variables somewhere else
+    // const variables = useMutationState<NewTask>({
+    //     filters: { mutationKey: ['addTask'], status: 'pending' },
+    //     select: (mutation) => mutation.state.variables as NewTask,
+    // })
+    // console.log(variables)
+
     if (isLoading) return <LoadingSpinner />
     return <div className='min-h-screen max-w-7xl mx-auto '>
         <p className='text-2xl text-center mt-8'>Dashboard</p>

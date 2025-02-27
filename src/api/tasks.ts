@@ -96,6 +96,7 @@ export function addTaskMutation() {
         onError(error) {
             console.log(error)
         },
+        mutationKey: ['addTask']
     })
 }
 

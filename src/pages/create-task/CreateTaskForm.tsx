@@ -55,7 +55,9 @@ export function CreateTaskForm({ mutation, register, errors, handleSubmit,
                         </Form.Message>
                     </div>
                     <Form.Control asChild>
-                        <textarea readOnly={readOnly} {...register("description")} className={`Textarea ${inputClass} h-36`} placeholder="Enter task description" />
+                        <textarea readOnly={readOnly} {...register("description", {
+                            setValueAs: (value: any) => String(value)
+                        })} className={`Textarea ${inputClass} h-36`} placeholder="Enter task description" />
                     </Form.Control>
                     {errors.description && <p className={formTextError}>{errors.description.message?.toString()}</p>}
                 </Form.Field>
