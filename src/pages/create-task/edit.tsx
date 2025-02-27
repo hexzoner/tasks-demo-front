@@ -59,7 +59,7 @@ export const EditTask: FC = () => {
         // console.log(data)
         try {
             if (taskSchema.parse(data)) {
-                console.log("Validation successful")
+                // console.log("Validation successful")
                 editTask.mutate(data)
             }
         } catch (error) {
