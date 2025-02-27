@@ -11,10 +11,9 @@ import { useNavigate } from 'react-router-dom';
 export const Page: FC = () => {
     const nav = useNavigate()
 
-    function onSuccess(data: any) {
-        console.log(data.data.token)
-        console.log(data.data.user)
-        //redirect user to dashboard
+    function onSuccess() {
+        // console.log(data.data.token)
+        // console.log(data.data.user)    
         nav('/dashboard')
     }
 

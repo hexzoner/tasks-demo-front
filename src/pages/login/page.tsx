@@ -19,8 +19,7 @@ export const Page: FC = () => {
 
     async function onSuccess() {
         // console.log(data.data.token)
-        // console.log(data.data.user)
-        //redirect user to dashboard
+        // console.log(data.data.user) 
         nav('/dashboard')
     }
 
